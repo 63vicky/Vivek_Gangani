@@ -9,14 +9,15 @@ const connectDB = require('./config/db.js');
 
 const app = express();
 
+app.use(express.json());
 app.use(
   cors({
     origin: process.env.CLIENT_URL
       ? [process.env.CLIENT_URL]
       : ['http://localhost:3000', 'http://localhost:5173'],
+    credentials: true,
   })
 );
-app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', authenticateJWT, taskRoutes);
