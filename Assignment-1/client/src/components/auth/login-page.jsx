@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
@@ -22,9 +23,7 @@ export function LoginPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -62,7 +61,14 @@ export function LoginPage() {
 
     if (!validateForm()) return;
 
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password }))
+      .unwrap()
+      .then(() => {
+        toast.success('Login successful!');
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   return (
@@ -76,12 +82,6 @@ export function LoginPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input

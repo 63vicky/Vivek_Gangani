@@ -73,7 +73,7 @@ export function TaskDashboard() {
         </div>
 
         <div className="space-y-6">
-          <Card>
+          <Card className="sticky top-20">
             <CardHeader>
               <CardTitle>Task Summary</CardTitle>
             </CardHeader>

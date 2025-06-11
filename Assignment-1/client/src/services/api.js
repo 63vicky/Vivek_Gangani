@@ -25,7 +25,9 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
@@ -39,6 +41,10 @@ export const authAPI = {
   },
   register: async (userData) => {
     const response = await api.post('/auth/register', userData);
+    return response.data;
+  },
+  getMe: async () => {
+    const response = await api.get('/auth/me');
     return response.data;
   },
 };

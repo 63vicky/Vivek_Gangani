@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await authAPI.login(credentials);
       localStorage.setItem('token', response.token);
-      return response;
+      return Promise.resolve().then(() => response);
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
     }
@@ -28,7 +28,7 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await authAPI.register(userData);
       localStorage.setItem('token', response.token);
-      return response;
+      return Promise.resolve().then(() => response);
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || 'Registration failed'

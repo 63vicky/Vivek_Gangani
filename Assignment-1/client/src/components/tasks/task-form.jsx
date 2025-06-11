@@ -28,7 +28,7 @@ export function TaskForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('medium');
-  const [dueDate, setDueDate] = useState(Date | undefined);
+  const [dueDate, setDueDate] = useState(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const dispatch = useDispatch();
@@ -37,11 +37,7 @@ export function TaskForm() {
     e.preventDefault();
 
     if (!title.trim()) {
-      toast({
-        title: 'Error',
-        description: 'Task title is required',
-        variant: 'destructive',
-      });
+      toast.error('Task title is required');
       return;
     }
 
@@ -64,16 +60,9 @@ export function TaskForm() {
       setPriority('medium');
       setDueDate(undefined);
 
-      toast({
-        title: 'Success',
-        description: 'Task created successfully',
-      });
+      toast.success('Task created successfully');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to create task',
-        variant: 'destructive',
-      });
+      toast.error('Failed to create task');
     } finally {
       setIsSubmitting(false);
     }

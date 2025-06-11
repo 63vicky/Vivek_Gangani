@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function RegisterPage() {
   const [name, setName] = useState('');
@@ -24,9 +25,7 @@ export function RegisterPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -74,7 +73,14 @@ export function RegisterPage() {
 
     if (!validateForm()) return;
 
-    dispatch(registerUser({ name, email, password }));
+    dispatch(registerUser({ name, email, password }))
+      .unwrap()
+      .then(() => {
+        toast.success('Registration successful!');
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   return (
@@ -88,12 +94,6 @@ export function RegisterPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <Input

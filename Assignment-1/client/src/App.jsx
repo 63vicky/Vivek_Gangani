@@ -37,9 +37,13 @@ export default function App() {
                   path="/"
                   element={<Navigate to="/dashboard" replace />}
                 />
+                <Route
+                  path="*"
+                  element={<Navigate to="/dashboard" replace />}
+                />
               </Routes>
             </main>
-            <Toaster />
+            <Toaster richColors position="top-center" />
           </div>
         </AuthProvider>
       </Router>

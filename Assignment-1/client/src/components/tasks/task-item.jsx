@@ -54,18 +54,13 @@ export function TaskItem({ task }) {
         })
       ).unwrap();
 
-      toast({
-        title: 'Success',
+      toast.success('Task Marked', {
         description: `Task marked as ${
           !task.completed ? 'completed' : 'pending'
         }`,
       });
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to update task',
-        variant: 'destructive',
-      });
+      toast.error('Failed to update task');
     }
   };
 
@@ -73,13 +68,11 @@ export function TaskItem({ task }) {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
         await dispatch(deleteTask(task.id)).unwrap();
-        toast({
-          title: 'Success',
+        toast.success('Deleted', {
           description: 'Task deleted successfully',
         });
       } catch (error) {
-        toast({
-          title: 'Error',
+        toast.error('Error', {
           description: 'Failed to delete task',
           variant: 'destructive',
         });
@@ -89,9 +82,7 @@ export function TaskItem({ task }) {
 
   const handleEdit = async () => {
     if (!editTitle.trim()) {
-      toast({
-        title: 'Error',
-        description: 'Task title is required',
+      toast.error('Task title is required', {
         variant: 'destructive',
       });
       return;
@@ -111,16 +102,9 @@ export function TaskItem({ task }) {
       ).unwrap();
 
       setIsEditing(false);
-      toast({
-        title: 'Success',
-        description: 'Task updated successfully',
-      });
+      toast.success('Task updated successfully');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to update task',
-        variant: 'destructive',
-      });
+      toast.error('Failed to update task');
     }
   };
 

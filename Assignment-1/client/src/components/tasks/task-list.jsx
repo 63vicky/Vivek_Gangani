@@ -22,9 +22,9 @@ export function TaskList() {
 
   return (
     <div className="space-y-3">
-      {filteredTasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
-      ))}
+      {filteredTasks.map((task) => {
+        return <TaskItem key={task.id} task={task} />;
+      })}
     </div>
   );
 }
